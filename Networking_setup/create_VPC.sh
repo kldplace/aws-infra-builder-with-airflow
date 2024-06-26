@@ -24,13 +24,14 @@ if [ -z "$VPC_ID" ]; then
     exit 1
 fi
 
+# Send the (VPC ID) to the (variables_files) to use it with anotherr services configuration
 echo "export VPC_ID=\"$VPC_ID\"" > "$EXPORT_NETWORKING_FILE"
 # echo "export VPC_ID=\"$VPC_ID\"" >> "$EXPORT_RDS_FILE"
 
 # Delay to ensure the VPC is created before tagging
 sleep $DELAY
 
-# Tag VPC
+# Tagging the VPC for easier identification
 aws ec2 create-tags \
     --resources "$VPC_ID" \
     --tags Key=Name,Value=$VPC_NAME \

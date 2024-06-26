@@ -33,10 +33,12 @@ PUBLIC_SUBNET1_ID=$(aws ec2 create-subnet \
     --query 'Subnet.SubnetId' \
     --output text)
 
+# Tagging the public subnet 1 for easier identification
 aws ec2 create-tags \
     --resources $PUBLIC_SUBNET1_ID \
     --tags Key=Name,Value=Public-subnet-1
 
+# Send the (Public subnet 1 ID) to the (variables_files) to use it with anotherr services configuration
 echo "export PUBLIC_SUBNET1_ID=\"$PUBLIC_SUBNET1_ID\"" >> "$EXPORT_NETWORKING_FILE"
 
 # Create public subnet 2
@@ -47,10 +49,12 @@ PUBLIC_SUBNET2_ID=$(aws ec2 create-subnet \
     --query 'Subnet.SubnetId' \
     --output text)
 
+# Tagging the public subnet 2 for easier identification
 aws ec2 create-tags \
     --resources $PUBLIC_SUBNET2_ID \
     --tags Key=Name,Value=Public-subnet-2
 
+# Send the (Public subnet 2 ID) to the (variables_files) to use it with anotherr services configuration
 echo "export PUBLIC_SUBNET2_ID=\"$PUBLIC_SUBNET2_ID\"" >> "$EXPORT_NETWORKING_FILE"
 
 # -- PRIVATE SUBNETS/APP SUBNETS --
@@ -62,10 +66,12 @@ APP_SUBNET1_ID=$(aws ec2 create-subnet \
     --query 'Subnet.SubnetId' \
     --output text)
 
+# Tagging the APP subnet 1 for easier identification
 aws ec2 create-tags \
     --resources $APP_SUBNET1_ID \
     --tags Key=Name,Value=App-subnet-1
 
+# Send the (APP subnet 1 ID) to the (variables_files) to use it with anotherr services configuration
 echo "export APP_SUBNET1_ID=\"$APP_SUBNET1_ID\"" >> "$EXPORT_NETWORKING_FILE"
 
 # Create APP subnet 2
@@ -76,10 +82,12 @@ APP_SUBNET2_ID=$(aws ec2 create-subnet \
     --query 'Subnet.SubnetId' \
     --output text)
 
+# Tagging the APP subnet 2 for easier identification
 aws ec2 create-tags \
     --resources $APP_SUBNET2_ID \
     --tags Key=Name,Value=App-subnet-2
 
+# Send the (App subnet 2 ID) to the (variables_files) to use it with anotherr services configuration
 echo "export APP_SUBNET2_ID=\"$APP_SUBNET2_ID\"" >> "$EXPORT_NETWORKING_FILE"
 
 # -- PRIVATE SUBNETS/DATABASE SUBNETS --
@@ -91,10 +99,12 @@ DATABASE_SUBNET1_ID=$(aws ec2 create-subnet \
     --query 'Subnet.SubnetId' \
     --output text)
 
+# Tagging the Database subnet 1 for easier identification
 aws ec2 create-tags \
     --resources $DATABASE_SUBNET1_ID \
     --tags Key=Name,Value=Database-subnet-1
 
+# Send the (Database subnet 1 ID) to the (variables_files) to use it with anotherr services configuration
 echo "export DATABASE_SUBNET1_ID=\"$DATABASE_SUBNET1_ID\"" >> "$EXPORT_NETWORKING_FILE"
 echo "export DATABASE_SUBNET1_ID=\"$DATABASE_SUBNET1_ID\"" >> "$EXPORT_RDS_FILE"
 
@@ -106,10 +116,12 @@ DATABASE_SUBNET2_ID=$(aws ec2 create-subnet \
     --query 'Subnet.SubnetId' \
     --output text)
 
+# Tagging the Database subnet 2 for easier identification
 aws ec2 create-tags \
     --resources $DATABASE_SUBNET2_ID \
     --tags Key=Name,Value=Database-subnet-2
 
+# Send the (Database subnet 2 ID) to the (variables_files) to use it with anotherr services configuration
 echo "export DATABASE_SUBNET2_ID=\"$DATABASE_SUBNET2_ID\"" >> "$EXPORT_NETWORKING_FILE"
 echo "export DATABASE_SUBNET2_ID=\"$DATABASE_SUBNET2_ID\"" >> "$EXPORT_RDS_FILE"
 
