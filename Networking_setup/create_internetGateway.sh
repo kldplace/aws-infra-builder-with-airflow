@@ -3,7 +3,7 @@
 # Path to the export file
 EXPORT_NETWORKING_FILE="networking_variables.sh"
 # Path to the folder containing JSON templates for internet gateway creation for CloudFormation deployment
-JSON_FILE="../CloudFormation_json/step-03-create_internetGateway.json"
+JSON_FILE="../CloudFormation_json/step-03-create-internetGateway.json"
 
 # Source the export file to get the VPC_ID variable
 if [[ -f "$EXPORT_NETWORKING_FILE" ]]; then
@@ -42,6 +42,7 @@ cat << EOF > $JSON_FILE
     "VpcId": {
       "Type": "AWS::EC2::VPC::Id",
       "Description": "The ID of the VPC to attach the Internet Gateway to."
+      "Default": "$VPC_ID"  
     }
   },
   "Resources": {
