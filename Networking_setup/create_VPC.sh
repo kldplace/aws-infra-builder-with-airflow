@@ -1,13 +1,15 @@
 #!/bin/bash
 
+# Path to the export file
+EXPORT_NETWORKING_FILE="networking_variables.sh"
+# EXPORT_RDS_FILE="../RDS_setup/RDS_variables.sh"
+# Path to the folder containing JSON templates for VPC creation for CloudFormation deployment
+JSON_FILE="../CloudFormation_json/step-01-create-VPC.json"
 # VPC variables
 VPC_NAME="My-VPC-2024"
 VPC_CIDR="10.0.0.0/16"
 REGION="me-south-1"
 DELAY=5
-EXPORT_NETWORKING_FILE="networking_variables.sh"
-# EXPORT_RDS_FILE="../RDS_setup/RDS_variables.sh"
-JSON_FILE="../CloudFormation_json/step-01-create_VPC.json"
 
 # Create VPC
 VPC_ID=$(aws ec2 create-vpc \
@@ -25,7 +27,6 @@ fi
 echo "export VPC_ID=\"$VPC_ID\"" > "$EXPORT_NETWORKING_FILE"
 # echo "export VPC_ID=\"$VPC_ID\"" >> "$EXPORT_RDS_FILE"
 
-
 # Delay to ensure the VPC is created before tagging
 sleep $DELAY
 
@@ -35,7 +36,7 @@ aws ec2 create-tags \
     --tags Key=Name,Value=$VPC_NAME \
     --region $REGION
 
-
+# JSON templet to create a new VPC by using CloudFormation
 cat << EOF > $JSON_FILE
 {
     "AWSTemplateFormatVersion": "2010-09-09",
