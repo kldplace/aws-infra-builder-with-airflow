@@ -41,7 +41,7 @@ cat << EOF > $JSON_FILE
   "Parameters": {
     "VpcId": {
       "Type": "AWS::EC2::VPC::Id",
-      "Description": "The ID of the VPC to attach the Internet Gateway to."
+      "Description": "The ID of the VPC to attach the Internet Gateway to.",
       "Default": "$VPC_ID"  
     }
   },

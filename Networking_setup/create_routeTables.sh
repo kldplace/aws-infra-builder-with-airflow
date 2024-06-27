@@ -1,7 +1,17 @@
 #!/bin/bash
 
+# Path to the export file
+EXPORT_VARIABLES_FILE="../infrastructure_variables.sh"
 # Path to the folder containing JSON templates for route tables creation for CloudFormation deployment
 JSON_FILE="../CloudFormation_json/step-05-create-routeTables.json"
+
+# Source the export file to get the VPC_ID variable
+if [[ -f "$EXPORT_VARIABLES_FILE" ]]; then
+    source "$EXPORT_VARIABLES_FILE"
+else
+    echo "Export file not found: $EXPORT_VARIABLES_FILE"
+    exit 1
+fi
 
 # -- PUBLIC ROUTE TABLE --
 PUBLIC_ROUTE_TABLE_ID=$(aws ec2 create-route-table \

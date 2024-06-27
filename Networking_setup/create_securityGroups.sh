@@ -46,7 +46,7 @@ aws ec2 create-tags \
     --tags Key=Name,Value=$SG_APP_NAME
 
 # Send the (APP Instance security group ID) to the (infrastructure_variables file) to use it with anotherr services configuration
-echo "export APPINSTANCE_SECURITY_GROUP_ID=\"$APPINSTANCE_SECURITY_GROUP_ID\"" >> "$EXPORT_VARIABLES_FILE"
+echo "export APPINSTANCE_SECURITY_GROUP_ID=\"$APP_INSTANCE_SECURITY_GROUP_ID\"" >> "$EXPORT_VARIABLES_FILE"
 
 # -- RDS SECURITY GROUP --
 # Create security group for RDS Database
@@ -84,7 +84,7 @@ aws ec2 create-tags \
     --tags Key=Name,Value=$SG_EFS_NAME
 
 # Send the (EFS Mount Target security group ID) to the (infrastructure_variables file) to use it with anotherr services configuration
-echo "export EFSMountTarget_SECURITY_GROUP_ID=\"$EFSMountTarget_SECURITY_GROUP_ID\"" >> "$EXPORT_VARIABLES_FILE"
+echo "export EFSMountTarget_SECURITY_GROUP_ID=\"$EFS_SECURITY_GROUP_ID\"" >> "$EXPORT_VARIABLES_FILE"
 
 # JSON templet to create security group to use it for CloudFormation based on VPC i created before
 # note: you should execute [step-01-create-VPC.json] template before using this template
