@@ -33,7 +33,7 @@ aws ec2 create-tags \
 
 
 # JSON templet to create a new internet gateway to use it for CloudFormation based on VPC i created before
-# note: you should use [step-01-create-VPC.json] templete before using this templet
+# note: you should execute [step-01-create-VPC.json] template before using this template
 cat << EOF > $JSON_FILE
 {
   "AWSTemplateFormatVersion": "2010-09-09",

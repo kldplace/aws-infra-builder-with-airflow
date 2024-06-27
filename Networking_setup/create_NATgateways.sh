@@ -54,7 +54,9 @@ aws ec2 create-tags \
 echo "export NAT_GATEWAY_AZ2_ID=\"$NAT_GATEWAY_AZ2_ID\"" >> "$EXPORT_NETWORKING_FILE"
 
 # JSON templet to create a new NAT gateway to use it for CloudFormation based on VPC and both Public subnets i created before
-# note: you should use [step-02-create-subnets.json] templete before using this templet
+# note: you should execute these templates before using this template
+# [1][step-01-create-VPC.json] 
+# [2][step-02-create-subnets.json] 
 cat << EOF >$JSON_FILE 
 {
   "AWSTemplateFormatVersion": "2010-09-09",

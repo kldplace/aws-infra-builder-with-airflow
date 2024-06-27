@@ -126,7 +126,7 @@ echo "export DATABASE_SUBNET2_ID=\"$DATABASE_SUBNET2_ID\"" >> "$EXPORT_NETWORKIN
 echo "export DATABASE_SUBNET2_ID=\"$DATABASE_SUBNET2_ID\"" >> "$EXPORT_RDS_FILE"
 
 # JSON templet to create a new subnets by using CloudFormation based on VPC i created before
-# note: you should use [step-01-create-VPC.json] templete before using this templet
+# note: you should execute [step-01-create-VPC.json] template before using this template
 cat << EOF > $JSON_FILE
 {
     "AWSTemplateFormatVersion": "2010-09-09",
