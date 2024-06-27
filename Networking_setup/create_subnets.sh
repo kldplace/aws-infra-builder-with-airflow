@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Path to the export file
-EXPORT_NETWORKING_FILE="networking_variables.sh"
-EXPORT_RDS_FILE="../RDS_setup/RDS_variables.sh"
+EXPORT_VARIABLES_FILE="../infrastructure_variables.sh"
 # Path to the folder containing JSON templates for subnet creation for CloudFormation deployment
 JSON_FILE="../CloudFormation_json/step-02-create-subnets.json"
 # Subnet variables
@@ -17,10 +16,10 @@ DATABASE_SUBNET2_CIDR="10.0.5.0/24"
 
 
 # Source the export file to get the VPC_ID variable
-if [[ -f "$EXPORT_NETWORKING_FILE" ]]; then
-    source "$EXPORT_NETWORKING_FILE"
+if [[ -f "$EXPORT_VARIABLES_FILE" ]]; then
+    source "$EXPORT_VARIABLES_FILE"
 else
-    echo "Export file not found: $EXPORT_NETWORKING_FILE"
+    echo "Export file not found: $EXPORT_VARIABLES_FILE"
     exit 1
 fi
 
@@ -38,8 +37,8 @@ aws ec2 create-tags \
     --resources $PUBLIC_SUBNET1_ID \
     --tags Key=Name,Value=Public-subnet-1
 
-# Send the (Public subnet 1 ID) to the (variables_files) to use it with anotherr services configuration
-echo "export PUBLIC_SUBNET1_ID=\"$PUBLIC_SUBNET1_ID\"" >> "$EXPORT_NETWORKING_FILE"
+# Send the (Public subnet 1 ID) to the (infrastructure_variables file) to use it with anotherr services configuration
+echo "export PUBLIC_SUBNET1_ID=\"$PUBLIC_SUBNET1_ID\"" >> "$EXPORT_VARIABLES_FILE"
 
 # Create public subnet 2
 PUBLIC_SUBNET2_ID=$(aws ec2 create-subnet \
@@ -54,8 +53,8 @@ aws ec2 create-tags \
     --resources $PUBLIC_SUBNET2_ID \
     --tags Key=Name,Value=Public-subnet-2
 
-# Send the (Public subnet 2 ID) to the (variables_files) to use it with anotherr services configuration
-echo "export PUBLIC_SUBNET2_ID=\"$PUBLIC_SUBNET2_ID\"" >> "$EXPORT_NETWORKING_FILE"
+# Send the (Public subnet 2 ID) to the (infrastructure_variables file) to use it with anotherr services configuration
+echo "export PUBLIC_SUBNET2_ID=\"$PUBLIC_SUBNET2_ID\"" >> "$EXPORT_VARIABLES_FILE"
 
 # -- PRIVATE SUBNETS/APP SUBNETS --
 # Create APP subnet 1
@@ -71,8 +70,8 @@ aws ec2 create-tags \
     --resources $APP_SUBNET1_ID \
     --tags Key=Name,Value=App-subnet-1
 
-# Send the (APP subnet 1 ID) to the (variables_files) to use it with anotherr services configuration
-echo "export APP_SUBNET1_ID=\"$APP_SUBNET1_ID\"" >> "$EXPORT_NETWORKING_FILE"
+# Send the (APP subnet 1 ID) to the (infrastructure_variables file) to use it with anotherr services configuration
+echo "export APP_SUBNET1_ID=\"$APP_SUBNET1_ID\"" >> "$EXPORT_VARIABLES_FILE"
 
 # Create APP subnet 2
 APP_SUBNET2_ID=$(aws ec2 create-subnet \
@@ -87,8 +86,8 @@ aws ec2 create-tags \
     --resources $APP_SUBNET2_ID \
     --tags Key=Name,Value=App-subnet-2
 
-# Send the (App subnet 2 ID) to the (variables_files) to use it with anotherr services configuration
-echo "export APP_SUBNET2_ID=\"$APP_SUBNET2_ID\"" >> "$EXPORT_NETWORKING_FILE"
+# Send the (App subnet 2 ID) to the (infrastructure_variables file) to use it with anotherr services configuration
+echo "export APP_SUBNET2_ID=\"$APP_SUBNET2_ID\"" >> "$EXPORT_VARIABLES_FILE"
 
 # -- PRIVATE SUBNETS/DATABASE SUBNETS --
 # Create Database subnet 1
@@ -104,9 +103,8 @@ aws ec2 create-tags \
     --resources $DATABASE_SUBNET1_ID \
     --tags Key=Name,Value=Database-subnet-1
 
-# Send the (Database subnet 1 ID) to the (variables_files) to use it with anotherr services configuration
-echo "export DATABASE_SUBNET1_ID=\"$DATABASE_SUBNET1_ID\"" >> "$EXPORT_NETWORKING_FILE"
-echo "export DATABASE_SUBNET1_ID=\"$DATABASE_SUBNET1_ID\"" >> "$EXPORT_RDS_FILE"
+# Send the (Database subnet 1 ID) to the (infrastructure_variables file) to use it with anotherr services configuration
+echo "export DATABASE_SUBNET1_ID=\"$DATABASE_SUBNET1_ID\"" >> "$EXPORT_VARIABLES_FILE"
 
 # Create Database subnet 2
 DATABASE_SUBNET2_ID=$(aws ec2 create-subnet \
@@ -121,9 +119,8 @@ aws ec2 create-tags \
     --resources $DATABASE_SUBNET2_ID \
     --tags Key=Name,Value=Database-subnet-2
 
-# Send the (Database subnet 2 ID) to the (variables_files) to use it with anotherr services configuration
-echo "export DATABASE_SUBNET2_ID=\"$DATABASE_SUBNET2_ID\"" >> "$EXPORT_NETWORKING_FILE"
-echo "export DATABASE_SUBNET2_ID=\"$DATABASE_SUBNET2_ID\"" >> "$EXPORT_RDS_FILE"
+# Send the (Database subnet 2 ID) to the (infrastructure_variables file) to use it with anotherr services configuration
+echo "export DATABASE_SUBNET2_ID=\"$DATABASE_SUBNET2_ID\"" >> "$EXPORT_VARIABLES_FILE"
 
 # JSON templet to create a new subnets by using CloudFormation based on VPC i created before
 # note: you should execute [step-01-create-VPC.json] template before using this template

@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Path to the export file
-EXPORT_NETWORKING_FILE="networking_variables.sh"
-EXPORT_RDS_FILE="../RDS_setup/RDS_variables.sh"
+EXPORT_VARIABLES_FILE="../infrastructure_variables.sh"
 # Path to the folder containing JSON templates for internet gateway creation for CloudFormation deployment
 JSON_FILE="../CloudFormation_json/step-06-create_securityGroups.json"
 
@@ -19,10 +18,10 @@ SG_EFS_DESCRIPTION="Security Group allowing traffic between EFS Mount Targets an
 
 
 # Source the export file to get the public subnets ID variables
-if [[ -f "$EXPORT_NETWORKING_FILE" ]]; then
-    source "$EXPORT_NETWORKING_FILE"
+if [[ -f "$EXPORT_VARIABLES_FILE" ]]; then
+    source "$EXPORT_VARIABLES_FILE"
 else
-    echo "Export file not found: $EXPORT_NETWORKING_FILE"
+    echo "Export file not found: $EXPORT_VARIABLES_FILE"
     exit 1
 fi
 
@@ -46,6 +45,9 @@ aws ec2 create-tags \
     --resources $APP_INSTANCE_SECURITY_GROUP_ID \
     --tags Key=Name,Value=$SG_APP_NAME
 
+# Send the (APP Instance security group ID) to the (infrastructure_variables file) to use it with anotherr services configuration
+echo "export APPINSTANCE_SECURITY_GROUP_ID=\"$APPINSTANCE_SECURITY_GROUP_ID\"" >> "$EXPORT_VARIABLES_FILE"
+
 # -- RDS SECURITY GROUP --
 # Create security group for RDS Database
 RDS_SECURITY_GROUP_ID=$(aws ec2 create-security-group \
@@ -59,8 +61,8 @@ aws ec2 create-tags \
     --resources $RDS_SECURITY_GROUP_ID \
     --tags Key=Name,Value=$SG_RDS_NAME
 
-# Send the (RDS security group ID) to the (variables_files) to use it with anotherr services configuration
-echo "export RDS_SECURITY_GROUP_ID=\"$RDS_SECURITY_GROUP_ID\"" >> "$EXPORT_RDS_FILE"
+# Send the (RDS security group ID) to the (infrastructure_variables file) to use it with anotherr services configuration
+echo "export RDS_SECURITY_GROUP_ID=\"$RDS_SECURITY_GROUP_ID\"" >> "$EXPORT_VARIABLES_FILE"
 
 # -- EFS MOUNT TARGET SECURITY GROUP --
 # Create security group for EFS Mount Target
@@ -80,6 +82,9 @@ aws ec2 authorize-security-group-ingress \
 aws ec2 create-tags \
     --resources $EFS_SECURITY_GROUP_ID \
     --tags Key=Name,Value=$SG_EFS_NAME
+
+# Send the (EFS Mount Target security group ID) to the (infrastructure_variables file) to use it with anotherr services configuration
+echo "export EFSMountTarget_SECURITY_GROUP_ID=\"$EFSMountTarget_SECURITY_GROUP_ID\"" >> "$EXPORT_VARIABLES_FILE"
 
 # JSON templet to create security group to use it for CloudFormation based on VPC i created before
 # note: you should execute [step-01-create-VPC.json] template before using this template

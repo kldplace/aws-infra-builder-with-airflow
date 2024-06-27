@@ -1,17 +1,7 @@
 #!/bin/bash
 
-# Path to the export file
-EXPORT_NETWORKING_FILE="networking_variables.sh"
 # Path to the folder containing JSON templates for route tables creation for CloudFormation deployment
 JSON_FILE="../CloudFormation_json/step-05-create-routeTables.json"
-
-# Source the export file to get the VPC, subnets, internet gateway and NAT gateways IDs variable
-if [[ -f "$EXPORT_NETWORKING_FILE" ]]; then
-    source "$EXPORT_NETWORKING_FILE"
-else
-    echo "Export file not found: $EXPORT_NETWORKING_FILE"
-    exit 1
-fi
 
 # -- PUBLIC ROUTE TABLE --
 PUBLIC_ROUTE_TABLE_ID=$(aws ec2 create-route-table \

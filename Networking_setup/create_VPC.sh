@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Path to the export file
-EXPORT_NETWORKING_FILE="networking_variables.sh"
-# EXPORT_RDS_FILE="../RDS_setup/RDS_variables.sh"
+EXPORT_VARIABLES_FILE="../infrastructure_variables.sh"
 # Path to the folder containing JSON templates for VPC creation for CloudFormation deployment
 JSON_FILE="../CloudFormation_json/step-01-create-VPC.json"
 # VPC variables
@@ -24,9 +23,8 @@ if [ -z "$VPC_ID" ]; then
     exit 1
 fi
 
-# Send the (VPC ID) to the (variables_files) to use it with anotherr services configuration
-echo "export VPC_ID=\"$VPC_ID\"" > "$EXPORT_NETWORKING_FILE"
-# echo "export VPC_ID=\"$VPC_ID\"" >> "$EXPORT_RDS_FILE"
+# Send the (VPC ID) to the (infrastructure_variables file) to use it with anotherr services configuration
+echo "export VPC_ID=\"$VPC_ID\"" > "$EXPORT_VARIABLES_FILE"
 
 # Delay to ensure the VPC is created before tagging
 sleep $DELAY
