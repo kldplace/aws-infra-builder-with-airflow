@@ -68,7 +68,7 @@ aws rds create-db-instance \
     --no-auto-minor-version-upgrade \
     --no-publicly-accessible \
 
-# JSON templet to create a route tables to use it for CloudFormation based on VPC, subnets, internet gateway and NAT gateways IDs i created before
+# JSON templet to create a RDS database to use it for CloudFormation
 # note: you should execute these templates before using this template
 # [1][step-01-create-VPC.json] 
 # [2][step-02-create-subnets.json] 
