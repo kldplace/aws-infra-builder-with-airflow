@@ -46,7 +46,7 @@ aws efs create-mount-target \
   --security-groups $EFSMountTarget_SECURITY_GROUP_ID \
   --region me-south-1
 
-# JSON templet to create a route tables to use it for CloudFormation based on VPC, subnets, internet gateway and NAT gateways IDs i created before
+# JSON templet to create a EFS Mount target to use it for CloudFormation
 # note: you should execute these templates before using this template
 # [1][step-01-create-VPC.json] 
 # [2][step-02-create-subnets.json] 
