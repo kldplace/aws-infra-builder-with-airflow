@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Path to the export file
-EXPORT_NETWORKING_FILE="networking_variables.sh"
+EXPORT_VARIABLES_FILE="../infrastructure_variables.sh"
 # Path to the folder containing JSON templates for route tables creation for CloudFormation deployment
 JSON_FILE="../CloudFormation_json/step-05-create-routeTables.json"
 
-# Source the export file to get the VPC, subnets, internet gateway and NAT gateways IDs variable
-if [[ -f "$EXPORT_NETWORKING_FILE" ]]; then
-    source "$EXPORT_NETWORKING_FILE"
+# Source the export file to get the VPC_ID variable
+if [[ -f "$EXPORT_VARIABLES_FILE" ]]; then
+    source "$EXPORT_VARIABLES_FILE"
 else
-    echo "Export file not found: $EXPORT_NETWORKING_FILE"
+    echo "Export file not found: $EXPORT_VARIABLES_FILE"
     exit 1
 fi
 

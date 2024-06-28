@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Path to the export file
-EXPORT_NETWORKING_FILE="networking_variables.sh"
+EXPORT_VARIABLES_FILE="../infrastructure_variables.sh"
 # Path to the folder containing JSON templates for internet gateway creation for CloudFormation deployment
 JSON_FILE="../CloudFormation_json/step-03-create-internetGateway.json"
 
 # Source the export file to get the VPC_ID variable
-if [[ -f "$EXPORT_NETWORKING_FILE" ]]; then
-    source "$EXPORT_NETWORKING_FILE"
+if [[ -f "$EXPORT_VARIABLES_FILE" ]]; then
+    source "$EXPORT_VARIABLES_FILE"
 else
-    echo "Export file not found: $EXPORT_NETWORKING_FILE"
+    echo "Export file not found: $EXPORT_VARIABLES_FILE"
     exit 1
 fi
 
@@ -18,8 +18,8 @@ IGW_ID=$(aws ec2 create-internet-gateway \
     --query 'InternetGateway.InternetGatewayId' \
     --output text)
 
-# Send the (internet gateway ID) to the (variables_files) to use it with anotherr services configuration
-echo "export IGW_ID=\"$IGW_ID\"" >> "$EXPORT_NETWORKING_FILE"
+# Send the (internet gateway ID) to the (infrastructure_variables file) to use it with anotherr services configuration
+echo "export IGW_ID=\"$IGW_ID\"" >> "$EXPORT_VARIABLES_FILE"
 
 # Attach the internet gateway with VPC
 aws ec2 attach-internet-gateway \
@@ -41,7 +41,7 @@ cat << EOF > $JSON_FILE
   "Parameters": {
     "VpcId": {
       "Type": "AWS::EC2::VPC::Id",
-      "Description": "The ID of the VPC to attach the Internet Gateway to."
+      "Description": "The ID of the VPC to attach the Internet Gateway to.",
       "Default": "$VPC_ID"  
     }
   },

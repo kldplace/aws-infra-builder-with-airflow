@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Path to the export file
-EXPORT_NETWORKING_FILE="networking_variables.sh"
+EXPORT_VARIABLES_FILE="../infrastructure_variables.sh"
 # Path to the folder containing JSON templates for NAT gateway creation for CloudFormation deployment
 JSON_FILE="../CloudFormation_json/step-04-create-NATgateways.json"
 
 # Source the export file to get the VPC_ID and both Public subnets variable
-if [[ -f "$EXPORT_NETWORKING_FILE" ]]; then
-    source "$EXPORT_NETWORKING_FILE"
+if [[ -f "$EXPORT_VARIABLES_FILE" ]]; then
+    source "$EXPORT_VARIABLES_FILE"
 else
-    echo "Export file not found: $EXPORT_NETWORKING_FILE"
+    echo "Export file not found: $EXPORT_VARIABLES_FILE"
     exit 1
 fi
 
@@ -30,8 +30,8 @@ aws ec2 create-tags \
     --resources $NAT_GATEWAY_AZ1_ID \
     --tags Key=Name,Value=NAT_publicSubnet-01
 
-# Send the (NAT gateway ID) to the (variables_files) to use it with anotherr services configuration
-echo "export NAT_GATEWAY_AZ1_ID=\"$NAT_GATEWAY_AZ1_ID\"" >> "$EXPORT_NETWORKING_FILE"
+# Send the (NAT gateway ID) to the (infrastructure_variables file) to use it with anotherr services configuration
+echo "export NAT_GATEWAY_AZ1_ID=\"$NAT_GATEWAY_AZ1_ID\"" >> "$EXPORT_VARIABLES_FILE"
 
 # --CREATE NAT GATEWAY FOR PUBLIC SUBNET 2 -- 
 # Create elastic IP for NAT gateway in the second availability zone 
@@ -50,8 +50,8 @@ aws ec2 create-tags \
     --resources $NAT_GATEWAY_AZ2_ID \
     --tags Key=Name,Value=NAT_publicSubnet-02
 
-# Send the (NAT gateway ID) to the (variables_files) to use it with anotherr services configuration
-echo "export NAT_GATEWAY_AZ2_ID=\"$NAT_GATEWAY_AZ2_ID\"" >> "$EXPORT_NETWORKING_FILE"
+# Send the (NAT gateway ID) to the (infrastructure_variables file) to use it with anotherr services configuration
+echo "export NAT_GATEWAY_AZ2_ID=\"$NAT_GATEWAY_AZ2_ID\"" >> "$EXPORT_VARIABLES_FILE"
 
 # JSON templet to create a new NAT gateway to use it for CloudFormation based on VPC and both Public subnets i created before
 # note: you should execute these templates before using this template
