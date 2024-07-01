@@ -1,2 +1,3 @@
 infrastructure_variables.sh
-CloudFormation_json/
+config_variables.sh
+CloudFormation_yaml/
