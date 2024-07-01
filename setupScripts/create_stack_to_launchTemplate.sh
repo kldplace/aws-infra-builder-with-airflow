@@ -26,7 +26,7 @@ fi
 # RDSSecurityGroupID: <RDS security group ID>
 
 aws cloudformation create-stack \
-  --stack-name myWordPressStack \
+  --stack-name WordPressStack \
   --template-body file:///home/kld/Github_projects/aws-infra-builder-with-airflow/CloudFormation_yaml/step-05-launchTemplate.yaml \
   --parameters ParameterKey=DatabaseName,ParameterValue=$INITIAL_DATABASE_NAME \
                ParameterKey=DatabaseHostName,ParameterValue=$WRITER_ENDPOINT \
