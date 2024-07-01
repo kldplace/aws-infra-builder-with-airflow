@@ -51,7 +51,7 @@ APP_LOADBALANCER_DNS=$(aws elbv2 describe-load-balancers \
   --output text)
 
 # Send the (DNS name) to the (infrastructure_variables file) to use it with Auto scaling configuration
-echo "export TARGETGROUP_ARN=\"$TARGETGROUP_ARN\"" >> "$EXPORT_VARIABLES_FILE"
+echo "export APP_LOADBALANCER_DNS=\"$APP_LOADBALANCER_DNS\"" >> "$EXPORT_VARIABLES_FILE"
 
 # Create listener to listen to the port 80 for laad balancer and target group
 aws elbv2 create-listener \
