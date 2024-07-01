@@ -367,7 +367,7 @@ aws ec2 create-tags \
 echo "export EFSMountTarget_SECURITY_GROUP_ID=\"$EFS_SECURITY_GROUP_ID\"" >> "$EXPORT_VARIABLES_FILE"
 
 # [step-01-create-networkingStructure.yaml]
-# YAML templete to create a networking structure to use it with CloudFormation service
+# YAML template to create a networking structure to use it with CloudFormation service
 cat << EOF > $YAML_FILE
 AWSTemplateFormatVersion: 2010-09-09
 
