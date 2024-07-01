@@ -50,7 +50,7 @@ aws efs create-mount-target \
 # YAML template to create EFS Mount Target to use it with CloudFormation service
 # note: you should execute [step-01-create-networkingStructure.yaml] template before using this template
 cat << EOF > $YAML_FILE
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: 2010-09-09
 Description: CloudFormation template to create an EFS FileSystem with mount targets in two subnets at two availability zones
 
 Parameters:
