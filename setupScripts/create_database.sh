@@ -45,6 +45,18 @@ aws rds create-db-cluster \
     --database-name $INITIAL_DATABASE_NAME \
     --tags Key=Name,Value=MyDBCluster \
 
+# Wait for the cluster to be created
+# aws rds wait db-cluster-available --db-cluster-identifier $DB_CLUSTER_IDENTIFIER
+
+# Get the writer endpoint
+WRITER_ENDPOINT=$(aws rds describe-db-clusters \
+    --db-cluster-identifier $DB_CLUSTER_IDENTIFIER \
+    --query 'DBClusters[0].Endpoint' \
+    --output text)
+
+# Send the (Writer endpoint) to the (infrastructure_variables file) to use it with cloudFormation configuration in [create_stack.sh] script for launch template
+echo "export WRITER_ENDPOINT=\"$WRITER_ENDPOINT\"" >> "$EXPORT_VARIABLES_FILE"
+
 # Create Aurora MySQL DB Instance in the [MyDBCluster] Cluster in the AZ1/me-south-1a
 aws rds create-db-instance \
     --db-instance-identifier mydbcluster-instance-1 \
@@ -67,6 +79,8 @@ aws rds create-db-instance \
     --no-auto-minor-version-upgrade \
     --no-publicly-accessible \
 
+# Send the (DB Name) to the (infrastructure_variables file) to use it with cloudFormation configuration in [create_stack.sh] script for launch template
+echo "export INITIAL_DATABASE_NAME=\"$INITIAL_DATABASE_NAME\"" >> "$EXPORT_VARIABLES_FILE"
 
 # [step-02-create-database.yaml]
 # YAML template to create RDS database structure to use it with CloudFormation service
