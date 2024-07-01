@@ -72,7 +72,7 @@ aws rds create-db-instance \
 # YAML template to create RDS database structure to use it with CloudFormation service
 # note: you should execute [step-01-create-networkingStructure.yaml] template before using this template
 cat << EOF > $YAML_FILE
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: 2010-09-09
 Description: CloudFormation template to create an Aurora MySQL DB Cluster with instances in two AZs.
 
 Parameters:
