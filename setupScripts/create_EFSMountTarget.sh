@@ -23,7 +23,7 @@ FILE_SYSTEM_ID=$(aws efs create-file-system \
   --query 'FileSystemId' \
   --tags Key=Name,Value=myWPEFS)
 
-# Send the (File system ID) to the (infrastructure_variables file) to use it with cloudFormation configuration in [create_stack.sh] script
+# Send the (File system ID) to the (infrastructure_variables file) to use it with cloudFormation configuration in [create_stack.sh] script for launch template
 echo "export FILE_SYSTEM_ID=\"$FILE_SYSTEM_ID\"" >> "$EXPORT_VARIABLES_FILE"
 # Delay execution to ensure the EFS is created before setting the backup policy.
 sleep 10
