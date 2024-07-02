@@ -122,13 +122,11 @@ This section demonstrates the execution of the Airflow DAGs to orchestrate the A
 - Stores all generated CloudFormation YAML files in the S3 bucket by executing the `aws_infrastructure_bucket/infrastructureBucket.sh` script.
 
 ## Verification of Infrastructure Setup
-After executing the Airflow DAGs, it’s important to check that the AWS infrastructure has been set up correctly and that the WordPress **web application is working**. Below are images showing the database after creation and the target groups with healthy instances.
+After executing the Airflow DAGs, it’s important to check that the AWS infrastructure has been set up correctly and that the WordPress **web application is working**. Below are images showing the database after creation and the WordPress web application.
 
 **RDS cluster with its instances**
 ![RDS cluster](img/database.png)
 
-**Target groups with healthy instances**
-![Target group](img/health_check.png)
 
 **WordPress web application**
 ![wordPress page](img/wordPress_page.png)
