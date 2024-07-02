@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: CloudFormation template to create an EFS FileSystem with mount targets in two subnets at two availability zones
+
+Parameters:
+  AppSubnet1Id:
+    Type: String
+    Default: subnet-07430b50d2671387f
+    Description: Subnet ID for the first application subnet in AZ1
+  AppSubnet2Id:
+    Type: String
+    Default: subnet-0b0b5e2df77089b71
+    Description: Subnet ID for the second application subnet in AZ2
+  EFSMountTargetSecurityGroupId:
+    Type: String
+    Default: sg-0b51acf926a5373f8
+    Description: Security group ID for the EFS mount targets
+
+Resources:
+  MyEFSFileSystem:
+    Type: "AWS::EFS::FileSystem"
+    Properties:
+      PerformanceMode: generalPurpose
+      Encrypted: false
+      FileSystemTags:
+        - Key: Name
+          Value: myWPEFS
+
+  EFSMountTarget1:
+    Type: "AWS::EFS::MountTarget"
+    Properties:
+      FileSystemId: !Ref MyEFSFileSystem
+      SubnetId: !Ref AppSubnet1Id
+      SecurityGroups: 
+        - !Ref EFSMountTargetSecurityGroupId
+
+  EFSMountTarget2:
+    Type: "AWS::EFS::MountTarget"
+    Properties:
+      FileSystemId: !Ref MyEFSFileSystem
+      SubnetId: !Ref AppSubnet2Id
+      SecurityGroups: 
+        - !Ref EFSMountTargetSecurityGroupId

@@ -1,0 +1,109 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: CloudFormation template to create an Aurora MySQL DB Cluster with instances in two AZs.
+
+Parameters:
+  DBSubnetGroupName:
+    Type: String
+    Default: AuroraSubnetGroup
+    Description: The name of the DB Subnet Group
+  DBSubnetGroupDescription:
+    Type: String
+    Default: A 2 AZ subnet group for my database
+    Description: Description of the DB Subnet Group
+  DatabaseSubnet1Id:
+    Type: String
+    Default: subnet-0b1030c521fa12c44
+    Description: Subnet ID for the first database subnet
+  DatabaseSubnet2Id:
+    Type: String
+    Default: subnet-0704bf5e447efff78
+    Description: Subnet ID for the second database subnet
+  DBClusterIdentifier:
+    Type: String
+    Default: MyDBCluster
+    Description: Identifier for the DB Cluster
+  Engine:
+    Type: String
+    Default: aurora-mysql
+    Description: The database engine to use
+  EngineVersion:
+    Type: String
+    Default: 8.0.mysql_aurora.3.05.2
+    Description: The version of the database engine
+  RDSSecurityGroupId:
+    Type: String
+    Default: sg-089b59a5f112c5bfb
+    Description: Security group ID for the RDS
+  MasterUsername:
+    Type: String
+    Default: admin
+    Description: The master username for the database
+  MasterUserPassword:
+    Type: String
+    Default: Khalid2024
+    Description: The master user password for the database
+  InitialDatabaseName:
+    Type: String
+    Default: WPDatabase
+    Description: The initial database name
+  DBInstanceClass:
+    Type: String
+    Default: db.t3.medium
+    Description: The instance class for the database
+
+Resources:
+  AuroraSubnetGroup:
+    Type: "AWS::RDS::DBSubnetGroup"
+    Properties:
+      DBSubnetGroupName: !Ref DBSubnetGroupName
+      DBSubnetGroupDescription: !Ref DBSubnetGroupDescription
+      SubnetIds:
+        - !Ref DatabaseSubnet1Id
+        - !Ref DatabaseSubnet2Id
+      Tags:
+        - Key: Name
+          Value: AuroraDBSubnetGroup
+
+  MyDBCluster:
+    Type: "AWS::RDS::DBCluster"
+    Properties:
+      DBClusterIdentifier: !Ref DBClusterIdentifier
+      Engine: !Ref Engine
+      EngineVersion: !Ref EngineVersion
+      DBSubnetGroupName: !Ref AuroraSubnetGroup
+      VpcSecurityGroupIds:
+        - !Ref RDSSecurityGroupId
+      BackupRetentionPeriod: 1
+      MasterUsername: !Ref MasterUsername
+      MasterUserPassword: !Ref MasterUserPassword
+      DatabaseName: !Ref InitialDatabaseName
+      AvailabilityZones:
+        - me-south-1a
+        - me-south-1b
+      Tags:
+        - Key: "Name"
+          Value: "MyDBCluster"
+
+  MyDBClusterInstance1:
+    Type: "AWS::RDS::DBInstance"
+    Properties:
+      DBInstanceIdentifier: "mydbcluster-instance-1"
+      DBClusterIdentifier: !Ref MyDBCluster
+      DBInstanceClass: !Ref DBInstanceClass
+      Engine: !Ref Engine
+      EngineVersion: !Ref EngineVersion
+      AvailabilityZone: me-south-1a
+      AutoMinorVersionUpgrade: false
+      PubliclyAccessible: false
+
+  MyDBClusterInstance1MeSouth1b:
+    Type: "AWS::RDS::DBInstance"
+    Properties:
+      DBInstanceIdentifier: "mydbcluster-instance-1-me-south-1b"
+      DBClusterIdentifier: !Ref MyDBCluster
+      DBInstanceClass: !Ref DBInstanceClass
+      Engine: !Ref Engine
+      EngineVersion: !Ref EngineVersion
+      AvailabilityZone: me-south-1b
+      AutoMinorVersionUpgrade: false
+      PubliclyAccessible: false

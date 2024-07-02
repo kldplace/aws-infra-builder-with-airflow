@@ -1,0 +1,93 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: AWS CloudFormation template to create Auto Scaling Group and Target Tracking Scaling Policy for WordPress
+
+Parameters:
+  AutoScalingGroupName:
+    Type: String
+    Default: WP-ASG
+    Description: The name of the Auto Scaling Group
+
+  LaunchTemplateName:
+    Type: String
+    Default: LabLaunchTemplate
+    Description: The name of the Launch Template to use
+
+  LaunchTemplateVersion:
+    Type: String
+    Default: 1
+    Description: The version of the Launch Template to use
+
+  AppSubnet1ID:
+    Type: AWS::EC2::Subnet::Id
+    Default: subnet-07430b50d2671387f
+    Description: The ID of the first APP subnet
+
+  AppSubnet2ID:
+    Type: AWS::EC2::Subnet::Id
+    Default: subnet-0b0b5e2df77089b71
+    Description: The ID of the second APP subnet
+
+  DesiredCapacity:
+    Type: Number
+    Default: 2
+    Description: The desired capacity for the Auto Scaling Group
+
+  MinSize:
+    Type: Number
+    Default: 2
+    Description: The minimum size of the Auto Scaling Group
+
+  MaxSize:
+    Type: Number
+    Default: 4
+    Description: The maximum size of the Auto Scaling Group
+
+  TargetGroupARN:
+    Type: String
+    Default: arn:aws:elasticloadbalancing:me-south-1:891376992290:targetgroup/myWPTargetGroup/03f562d1b9862173
+    Description: The ARN of the Target Group
+
+Resources:
+  WordPressAutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      AutoScalingGroupName: !Ref AutoScalingGroupName
+      LaunchTemplate:
+        LaunchTemplateName: !Ref LaunchTemplateName
+        Version: !Ref LaunchTemplateVersion
+      VPCZoneIdentifier:
+        - !Ref AppSubnet1ID
+        - !Ref AppSubnet2ID
+      HealthCheckType: ELB
+      HealthCheckGracePeriod: 300
+      DesiredCapacity: !Ref DesiredCapacity
+      MinSize: !Ref MinSize
+      MaxSize: !Ref MaxSize
+      TargetGroupARNs:
+        - !Ref TargetGroupARN
+      Tags:
+        - Key: Name
+          Value: WP-App
+          PropagateAtLaunch: true
+      TerminationPolicies:
+        - Default
+
+  TargetTrackingScalingPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AutoScalingGroupName: !Ref WordPressAutoScalingGroup
+      PolicyName: myTargetTrackingPolicy
+      PolicyType: TargetTrackingScaling
+      EstimatedInstanceWarmup: 300
+      TargetTrackingConfiguration:
+        TargetValue: 50.0
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ASGAverageCPUUtilization
+
+Outputs:
+  AutoScalingGroupName:
+    Description: The name of the Auto Scaling Group
+    Value: !Ref WordPressAutoScalingGroup
+  TargetTrackingPolicyName:
+    Description: The name of the Target Tracking Scaling Policy
+    Value: !Ref TargetTrackingScalingPolicy
