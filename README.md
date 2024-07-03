@@ -127,6 +127,8 @@ After executing the Airflow DAGs, it’s important to check that the AWS infrast
 **RDS cluster with its instances**
 ![RDS cluster](img/database.png)
 
+**Target Group with Healthy Status**
+![RDS cluster](img/target_group.png)
 
 **WordPress web application**
 ![wordPress page](img/wordPress_page.png)

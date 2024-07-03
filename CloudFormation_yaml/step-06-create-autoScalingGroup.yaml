@@ -19,12 +19,12 @@ Parameters:
 
   AppSubnet1ID:
     Type: AWS::EC2::Subnet::Id
-    Default: subnet-07430b50d2671387f
+    Default: subnet-01019a82169c84723
     Description: The ID of the first APP subnet
 
   AppSubnet2ID:
     Type: AWS::EC2::Subnet::Id
-    Default: subnet-0b0b5e2df77089b71
+    Default: subnet-0c5994bd1194c4e3d
     Description: The ID of the second APP subnet
 
   DesiredCapacity:
@@ -44,7 +44,7 @@ Parameters:
 
   TargetGroupARN:
     Type: String
-    Default: arn:aws:elasticloadbalancing:me-south-1:891376992290:targetgroup/myWPTargetGroup/03f562d1b9862173
+    Default: arn:aws:elasticloadbalancing:me-south-1:891376992290:targetgroup/myWPTargetGroup/cf68bb7c9997dd9d
     Description: The ARN of the Target Group
 
 Resources:
