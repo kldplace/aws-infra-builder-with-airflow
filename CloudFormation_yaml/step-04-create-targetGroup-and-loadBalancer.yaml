@@ -5,19 +5,19 @@ Parameters:
   MyVPC:
     Type: "AWS::EC2::VPC::Id"
     Description: The ID of the VPC
-    Default: vpc-024db11d35826730f
+    Default: vpc-0a3fbd9e60e6be13f
   AppInstanceSecurityGroup:
     Type: "AWS::EC2::SecurityGroup::Id"
     Description: The ID of the security group for the application instances
-    Default: sg-0615a7367343f78b1
+    Default: sg-020b3420ac951be89
   PublicSubnet1:
     Type: "AWS::EC2::Subnet::Id"
     Description: The ID of the first public subnet
-    Default: subnet-01d5bc2cf2c723261
+    Default: subnet-0c8b9b703b1b50a2f
   PublicSubnet2:
     Type: "AWS::EC2::Subnet::Id"
     Description: The ID of the second public subnet
-    Default: subnet-07f8d44eb1f769894
+    Default: subnet-0d7f99dff507781f9
 
 Resources:
   MyTargetGroup:

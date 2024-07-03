@@ -12,11 +12,11 @@ Parameters:
     Description: Description of the DB Subnet Group
   DatabaseSubnet1Id:
     Type: String
-    Default: subnet-0b1030c521fa12c44
+    Default: subnet-0e78fca9c4dae2f4b
     Description: Subnet ID for the first database subnet
   DatabaseSubnet2Id:
     Type: String
-    Default: subnet-0704bf5e447efff78
+    Default: subnet-0f9544b24f022694f
     Description: Subnet ID for the second database subnet
   DBClusterIdentifier:
     Type: String
@@ -32,7 +32,7 @@ Parameters:
     Description: The version of the database engine
   RDSSecurityGroupId:
     Type: String
-    Default: sg-089b59a5f112c5bfb
+    Default: sg-02ff3a03cbc0201f9
     Description: Security group ID for the RDS
   MasterUsername:
     Type: String

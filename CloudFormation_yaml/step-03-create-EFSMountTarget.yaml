@@ -4,15 +4,15 @@ Description: CloudFormation template to create an EFS FileSystem with mount targ
 Parameters:
   AppSubnet1Id:
     Type: String
-    Default: subnet-07430b50d2671387f
+    Default: subnet-01019a82169c84723
     Description: Subnet ID for the first application subnet in AZ1
   AppSubnet2Id:
     Type: String
-    Default: subnet-0b0b5e2df77089b71
+    Default: subnet-0c5994bd1194c4e3d
     Description: Subnet ID for the second application subnet in AZ2
   EFSMountTargetSecurityGroupId:
     Type: String
-    Default: sg-0b51acf926a5373f8
+    Default: sg-01d0657fc2e21f523
     Description: Security group ID for the EFS mount targets
 
 Resources:
