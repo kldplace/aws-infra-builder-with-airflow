@@ -31,6 +31,8 @@ The setupScripts folder contains six shell scripts that automate the creation of
 ## Scripts Overview (Manual Execution)
 ***Note***: It is recommended to run these scripts manually in order before transitioning to **Airflow execution**. This helps ensure that every part of the infrastructure is correctly set up without any issues.
 
+![Project workflow](img/Project_workflow.png)
+
 **1. `create_networkingStructure.sh`**
 - **Description:** Sets up the networking structure in AWS, including VPC, subnets, internet gateway, NAT gateways,Elastic IPs(required for NAT gateways), route tables, and security groups.
 - **Manual Execution:** Run `create_networkingStructure.sh` first to build the networking infrastructure and generate a CloudFormation YAML file `step-01-create-networkingStructure.yaml`.
@@ -88,9 +90,11 @@ This section demonstrates how to set up Apache Airflow to orchestrate the creati
 
 This section demonstrates the execution of the Airflow DAGs to orchestrate the AWS infrastructure setup. Below is an image showing the DAGs after execution, followed by a detailed explanation of each task and the order in which they were run.
 
-![build aws infrastructure with airflow](img/airflow_dag_graph_and_grid.png)
+![build aws infrastructure with airflow](img/airflow_Dag.png)
 
 ### Execution Steps:
+
+![build aws infrastructure with airflow](img/projet_workflow_with_airflow.png)
 **1. Run `aws_networking_task`**
 - This task sets up the networking structure in AWS, including VPC, subnets, internet gateway, NAT gateways, Elastic IPs (required for NAT gateways), route tables, and security groups.
 - Wait for this task to complete before proceeding to the next step.
